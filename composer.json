@@ -1,5 +1,5 @@
 {
-  "version": "1.0.2",
+  "version": "1.0.3",
   "name": "ticdenis/liccheck",
   "bin": [
     "liccheck"
@@ -22,6 +22,7 @@
       "homepage": "https://github.com/ticdenis"
     }
   ],
+  "minimum-stability": "dev",
   "require": {
     "php": ">=5.4"
   },
