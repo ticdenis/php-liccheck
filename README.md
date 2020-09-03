@@ -7,7 +7,7 @@ liccheck is an PHP License Checker library thanks to `composer licenses` command
 Use the package manager [composer](https://getcomposer.org/doc/) to install liccheck.
 
 ```bash
-composer require ticdenis/liccheck
+composer require --require-dev ticdenis/liccheck
 ```
 
 ## Usage
