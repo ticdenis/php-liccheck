@@ -1,0 +1,39 @@
+{
+  "version": "1.0.0",
+  "name": "ticdenis/liccheck",
+  "bin": [
+    "liccheck"
+  ],
+  "description": "PHP License Checker library",
+  "keywords": [
+    "php",
+    "composer",
+    "license",
+    "checker",
+    "liccheck"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "homepage": "https://github.com/ticdenis/php-liccheck",
+  "authors": [
+    {
+      "name": "ticdenis",
+      "email": "denisnavarroalcaide@outlook.es",
+      "homepage": "https://github.com/ticdenis"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=5.4"
+  },
+  "scripts": {
+    "liccheck": "liccheck"
+  },
+  "config": {
+    "bin-dir": "./"
+  },
+  "support": {
+    "issues": "https://github.com/ticdenis/php-liccheck/issues",
+    "source": "https://github.com/ticdenis/php-liccheck"
+  }
+}

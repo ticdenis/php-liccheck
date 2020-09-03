@@ -1,0 +1,8 @@
+# External
+.DS_Store/
+.idea/
+.vscode/
+*.iml
+
+# Internal
+/vendor/
