@@ -13,7 +13,7 @@ composer require --dev ticdenis/liccheck
 ## Usage
 
 ```bash
-liccheck -s license_strategy.json -r /usr/local/bin/composer
+./vendor/bin/liccheck -s license_strategy.json
 ```
 
 Here an example of a ``license_strategy.json`` file:
@@ -29,7 +29,7 @@ Here an example of a ``license_strategy.json`` file:
         ]
     },
     "Authorized Packages": [
-      "phpunit/phpunit"
+      "ticdenis/liccheck"
     ]
 }
 ```

@@ -1,0 +1,11 @@
+{
+  "Licenses": {
+    "authorized_licenses": [],
+    "unauthorized_licenses": [
+      "propietary"
+    ]
+  },
+  "Authorized Packages": [
+    "ticdenis/liccheck"
+  ]
+}
