@@ -107,7 +107,7 @@ foreach ($licenses['Licenses']['authorized_licenses'] as $authorizedLicense) {
 }
 
 // Remove Unauthorized Licenses found from dependencies and add to $unauthorizedLicensesFound array
-print('check unauthorized packages...');
+echo('check unauthorized packages...');
 $unauthorizedLicensesFound = [];
 foreach ($unauthorizedLicenses as $unauthorizedLicense) {
     foreach ($dependencies as $dependency => $value) {
