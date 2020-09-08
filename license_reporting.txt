@@ -55,3 +55,41 @@ sebastian/recursion-context 1.0.x-dev b19cc32 BSD-3-Clause OK
 sebastian/version 1.0.6 BSD-3-Clause OK
 symfony/polyfill-ctype dev-master 1c30264 MIT OK
 symfony/yaml 2.8.x-dev 02c1859 MIT OK
+doctrine/instantiator 1.0.x-dev 83b5716 MIT OK
+phpdocumentor/reflection-docblock 2.0.5 MIT OK
+phpspec/prophecy v1.10.3 MIT OK
+phpunit/php-code-coverage 2.2.x-dev eabf68b BSD-3-Clause OK
+phpunit/php-file-iterator 1.4.x-dev 730b01b BSD-3-Clause OK
+phpunit/php-text-template 1.2.1 BSD-3-Clause OK
+phpunit/php-timer 1.0.x-dev 9513098 BSD-3-Clause OK
+phpunit/php-token-stream 1.4.12 BSD-3-Clause OK
+phpunit/phpunit 4.8.36 BSD-3-Clause OK
+phpunit/phpunit-mock-objects 2.3.x-dev ac8e7a3 BSD-3-Clause OK
+sebastian/comparator 1.2.x-dev 18a5d97 BSD-3-Clause OK
+sebastian/diff 1.4.x-dev 7f066a2 BSD-3-Clause OK
+sebastian/environment 1.3.x-dev 67f5569 BSD-3-Clause OK
+sebastian/exporter 1.2.x-dev dcd43bc BSD-3-Clause OK
+sebastian/global-state 1.1.x-dev cea85a8 BSD-3-Clause OK
+sebastian/recursion-context 1.0.x-dev b19cc32 BSD-3-Clause OK
+sebastian/version 1.0.6 BSD-3-Clause OK
+symfony/polyfill-ctype dev-master 1c30264 MIT OK
+symfony/yaml 2.8.x-dev 02c1859 MIT OK
+doctrine/instantiator 1.0.x-dev 83b5716 MIT OK
+phpdocumentor/reflection-docblock 2.0.5 MIT OK
+phpspec/prophecy v1.10.3 MIT OK
+phpunit/php-code-coverage 2.2.x-dev eabf68b BSD-3-Clause OK
+phpunit/php-file-iterator 1.4.x-dev 730b01b BSD-3-Clause OK
+phpunit/php-text-template 1.2.1 BSD-3-Clause OK
+phpunit/php-timer 1.0.x-dev 9513098 BSD-3-Clause OK
+phpunit/php-token-stream 1.4.12 BSD-3-Clause OK
+phpunit/phpunit 4.8.36 BSD-3-Clause OK
+phpunit/phpunit-mock-objects 2.3.x-dev ac8e7a3 BSD-3-Clause OK
+sebastian/comparator 1.2.x-dev 18a5d97 BSD-3-Clause OK
+sebastian/diff 1.4.x-dev 7f066a2 BSD-3-Clause OK
+sebastian/environment 1.3.x-dev 67f5569 BSD-3-Clause OK
+sebastian/exporter 1.2.x-dev dcd43bc BSD-3-Clause OK
+sebastian/global-state 1.1.x-dev cea85a8 BSD-3-Clause OK
+sebastian/recursion-context 1.0.x-dev b19cc32 BSD-3-Clause OK
+sebastian/version 1.0.6 BSD-3-Clause OK
+symfony/polyfill-ctype dev-master 1c30264 MIT OK
+symfony/yaml 2.8.x-dev 02c1859 MIT OK

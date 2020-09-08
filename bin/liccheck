@@ -4,6 +4,8 @@
 use LicCheck\Application;
 use LicCheck\CommandLine;
 
-require __DIR__ . '/../vendor/autoload.php';
+if (is_file($autoload = getcwd() . '/vendor/autoload.php')) {
+    require $autoload;
+}
 
 (new Application())->run($argv, new CommandLine());
