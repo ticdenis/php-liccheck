@@ -1,20 +1,16 @@
 {
-  "version": "1.0.7",
   "name": "ticdenis/liccheck",
-  "bin": [
-    "liccheck"
-  ],
+  "type": "library",
   "description": "PHP License Checker library",
   "keywords": [
     "php",
     "composer",
     "license",
     "checker",
-    "liccheck"
+    "bin/liccheck"
   ],
-  "type": "library",
-  "license": "MIT",
   "homepage": "https://github.com/ticdenis/php-liccheck",
+  "license": "MIT",
   "authors": [
     {
       "name": "ticdenis",
@@ -22,19 +18,42 @@
       "homepage": "https://github.com/ticdenis"
     }
   ],
-  "minimum-stability": "dev",
-  "require": {
-    "php": ">=5.4",
-    "ext-json": "*"
-  },
-  "scripts": {
-    "liccheck": "liccheck"
-  },
-  "config": {
-    "bin-dir": "./"
-  },
   "support": {
     "issues": "https://github.com/ticdenis/php-liccheck/issues",
     "source": "https://github.com/ticdenis/php-liccheck"
+  },
+  "require": {
+    "php": ">=5.4",
+    "ext-json": "*",
+    "ext-mbstring": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "bin": [
+    "bin/liccheck"
+  ],
+  "scripts": {
+    "test": "./vendor/bin/phpunit --colors=always tests"
+  },
+  "autoload": {
+    "psr-4": {
+      "LicCheck\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.8"
+    }
   }
 }

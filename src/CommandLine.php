@@ -1,5 +1,8 @@
-#!/usr/bin/php
 <?php
+
+namespace LicCheck;
+
+use LicCheck\CommandLine\Strategy;
 
 if (in_array('-h', $argv, true) || in_array('--help', $argv, true)) {
     echo(sprintf(
@@ -15,25 +18,11 @@ optional arguments:
     exit(0);
 }
 
-$defaultLicenseStrategyPath = __DIR__ . '/license_strategy.json';
-if (!in_array('-s', $argv)) {
-    echo(sprintf('Using default strategy file "%s"...%s', $defaultLicenseStrategyPath, PHP_EOL));
-}
+$defaultLicenseStrategyPath = __DIR__ . '/../license_strategy.json';
+$licensesIndex              = (int)array_search('-s', $argv, true);
+$licensesPath               = $licensesIndex <= 0 ? $defaultLicenseStrategyPath : $argv[$licensesIndex + 1];
 
-$licensesIndex = (int)array_search('-s', $argv, true);
-$licensesPath  = $licensesIndex <= 0 ? $defaultLicenseStrategyPath : $argv[$licensesIndex + 1];
-$licenses      = file_get_contents($licensesPath);
-if (false === $licenses) {
-    echo(sprintf('Error reading "%s" strategy file%s', $licensesPath, PHP_EOL));
-    echo(sprintf('KO%s', PHP_EOL));
-    exit(1);
-}
-$licenses = json_decode($licenses, true);
-if (JSON_ERROR_NONE !== json_last_error()) {
-    echo(sprintf('Error decoding "%s"%s', $licensesPath, PHP_EOL));
-    echo(sprintf('KO%s', PHP_EOL));
-    exit(1);
-}
+$strategy = Strategy::fromConfig($licensesPath);
 
 $dependenciesIndex = (int)array_search('-r', $argv, true);
 $command           = sprintf('%s licenses --format json', $dependenciesIndex <= 0 ? 'composer' : $argv[$dependenciesIndex + 1]);
@@ -58,7 +47,7 @@ if (false === $dependencies) {
 }
 
 // Remove Authorized Packages from dependencies
-foreach ($licenses['Authorized Packages'] as $authorizedPackage) {
+foreach ($strategy->authorizedPackages() as $authorizedPackage) {
     foreach ($dependencies as $dependency => $value) {
         if ($authorizedPackage === $dependency) {
             unset($dependencies[$dependency]);
@@ -67,10 +56,7 @@ foreach ($licenses['Authorized Packages'] as $authorizedPackage) {
 }
 
 // Validate Authorized Licenses and Unauthorized Licenses
-$intersection = array_intersect(
-    $licenses['Licenses']['authorized_licenses'],
-    $licenses['Licenses']['unauthorized_licenses']
-);
+$intersection = array_intersect($strategy->authorizedLicenses(), $strategy->unauthorizedLicenses());
 if (!empty($intersection)) {
     echo(sprintf(
         'Duplicated Authorized and Unauthorized Licenses%s%s',
@@ -82,14 +68,14 @@ if (!empty($intersection)) {
 }
 
 // Prepare Unauthorized Licenses
-$unauthorizedLicenses = $licenses['Licenses']['unauthorized_licenses'];
+$unauthorizedLicenses = $strategy->unauthorizedLicenses();
 foreach ($dependencies as $dependency) {
     $unauthorizedLicenses = array_merge($unauthorizedLicenses, $dependency['license']);
 }
 $unauthorizedLicenses = array_unique($unauthorizedLicenses);
 
 // Remove Authorized Licenses from dependencies
-foreach ($licenses['Licenses']['authorized_licenses'] as $authorizedLicense) {
+foreach ($strategy->authorizedLicenses() as $authorizedLicense) {
     if (in_array($authorizedLicense, $unauthorizedLicenses, true)) {
         unset($unauthorizedLicenses[array_search($authorizedLicense, $unauthorizedLicenses)]);
     }

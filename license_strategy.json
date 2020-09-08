@@ -1,6 +1,9 @@
 {
   "Licenses": {
-    "authorized_licenses": [],
+    "authorized_licenses": [
+      "BSD-3-Clause",
+      "MIT"
+    ],
     "unauthorized_licenses": [
       "propietary"
     ]

@@ -2,6 +2,8 @@
 
 liccheck is an PHP License Checker library thanks to `composer licenses` command output to check composer packages listed and report license issues.
 
+Based on `dhatim/python-license-check`.
+
 ## Installation
 
 Use the package manager [composer](https://getcomposer.org/doc/) to install liccheck.
