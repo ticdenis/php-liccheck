@@ -31,8 +31,6 @@ final class Application
 
         $args['no-deps'] = $this->searchOptionValue($argv, '--no-deps', $args['no-deps']);
 
-        print_r($args);
-
         return $command->execute($args);
     }
 
