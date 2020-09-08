@@ -11,11 +11,7 @@ final class RequirementsTest extends TestCase
     public function testParse()
     {
         $requirements = array_keys(Requirements::parse('composer', true));
-        $dependencies = ['psr/log', 'symfony/console', 'symfony/debug', 'symfony/polyfill-mbstring'];
+        $dependencies = [];
         static::assertCount(count($dependencies), $requirements);
-        static::assertEquals($dependencies[0], $requirements[0]);
-        static::assertEquals($dependencies[1], $requirements[1]);
-        static::assertEquals($dependencies[2], $requirements[2]);
-        static::assertEquals($dependencies[3], $requirements[3]);
     }
 }

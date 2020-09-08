@@ -4,90 +4,67 @@ namespace LicCheck;
 
 use Exception;
 use InvalidArgumentException;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
 
-final class CommandLine extends Command
+final class CommandLine
 {
-    /** @var InputInterface|null */
-    private $input;
-    /** @var OutputInterface|null */
-    private $output;
-
-    /** @return void */
-    protected function configure()
+    /** @return int */
+    public function usage()
     {
-        $this
-            ->setName('liccheck')
-            ->setDescription('Check license of packages and their dependencies.')
-            ->addOption(
-                'sfile',
-                's',
-                InputOption::VALUE_OPTIONAL,
-                'strategy json file',
-                null
-            )
-            ->addOption(
-                'level',
-                'l',
-                InputOption::VALUE_OPTIONAL,
-                sprintf(
-                    '%s%s%s%s',
-                    'Level for testing compliance of packages, where:' . PHP_EOL,
-                    '  Standard - At least one authorized license (default);' . PHP_EOL,
-                    '  Cautious - Per standard but no unauthorized licenses;' . PHP_EOL,
-                    '  Paranoid - All licenses must by authorized.'
-                ),
-                Level::$STANDARD
-            )
-            ->addOption(
-                'rfile',
-                'r',
-                InputOption::VALUE_OPTIONAL,
-                'path/to/composer binary',
-                'composer'
-            )
-            ->addOption(
-                'reporting',
-                'R',
-                InputOption::VALUE_OPTIONAL,
-                'path/to/reporting.txt file',
-                null
-            )
-            ->addOption(
-                'no-deps',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'don\'t check dependencies',
-                true
-            );
+        echo(
+            "usage: liccheck [-h] [-s STRATEGY_JSON_FILE] [-l {STANDARD,CAUTIOUS,PARANOID}] [-r [COMPOSER_BINARY]] [-R [REPORTING_TXT_FILE]] [--no-deps]
+
+Check license of packages and their dependencies.
+    
+optional arguments:
+  -h, --help            show this help message and exit
+  -s STRATEGY_JSON_FILE, --sfile STRATEGY_JSON_FILE
+                        strategy json file
+  -l {STANDARD,CAUTIOUS,PARANOID}, --level {STANDARD,CAUTIOUS,PARANOID}
+                        Level for testing compliance of packages, where:
+                          Standard - At least one authorized license (default);
+                          Cautious - Per standard but no unauthorized licenses;
+                          Paranoid - All licenses must by authorized.
+  -r [COMPOSER_BINARY], --rfile [COMPOSER_BINARY]
+                        path/to/composer binary
+  -R [REPORTING_TXT_FILE], --reporting [REPORTING_TXT_FILE]
+                        path/to/reporting.txt file
+  --no-deps             don't check dependencies" . PHP_EOL
+        );
+        return 0;
+    }
+
+    /** @return array */
+    public function defaultOptions()
+    {
+        return [
+            'sfile'     => null,
+            'level'     => Level::$STANDARD,
+            'rfile'     => 'composer',
+            'reporting' => null,
+            'no-deps'   => true,
+        ];
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param $args array
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function execute($args)
     {
-        $this->input  = $input;
-        $this->output = $output;
         try {
-            $strategy = $this->readStrategy($input->getOption('sfile'));
+            $strategy = $this->readStrategy($args['sfile']);
             if (is_null($strategy)) {
                 return 1;
             }
             return $this->process(
-                (string)$input->getOption('rfile'),
+                (string)$args['rfile'],
                 $strategy,
-                (string)$input->getOption('level'),
-                $input->getOption('reporting'),
-                (bool)$input->getOption('no-deps')
+                (string)$args['level'],
+                $args['reporting'],
+                (bool)$args['no-deps']
             );
         } catch (Exception $err) {
-            $this->output->writeln($err->getMessage());
+            echo($err->getMessage() . PHP_EOL);
             return 1;
         }
     }
@@ -105,7 +82,7 @@ final class CommandLine extends Command
             // pass
         }
         if (is_null($strategyFile)) {
-            $this->output->writeln('Need to either configure composer.json or provide a strategy file');
+            echo('Need to either configure composer.json or provide a strategy file' . PHP_EOL);
             return null;
         }
         return Strategy::fromConfig($strategyFile);
@@ -121,14 +98,14 @@ final class CommandLine extends Command
      */
     private function process($composer, $strategy, $level, $reportingFile, $noDeps)
     {
-        $this->output->write('gathering licenses...');
+        echo('gathering licenses...');
         $pkgInfo = $this->getPackagesInfo($composer, $noDeps);
-        $this->output->writeln(sprintf(
-            '%s package%s%s.',
-            count($pkgInfo),
-            count($pkgInfo) <= 1 ? '' : 's',
-            $noDeps ? '' : ' and dependencies'
-        ));
+        echo(sprintf(
+                '%s package%s%s.',
+                count($pkgInfo),
+                count($pkgInfo) <= 1 ? '' : 's',
+                $noDeps ? '' : ' and dependencies'
+            ) . PHP_EOL);
         $groups = array_fill_keys(Reason::member(), []);
         foreach ($pkgInfo as $pkg) {
             $groups[$this->checkPackage($strategy, $pkg, $level)][] = $pkg;
@@ -174,20 +151,20 @@ final class CommandLine extends Command
         }
 
         if (true === array_key_exists(Reason::$OK, $groups)) {
-            $this->output->write('check authorized packages...');
-            $this->output->writeln(format($groups[Reason::$OK]));
+            echo('check authorized packages...');
+            echo(format($groups[Reason::$OK]) . PHP_EOL);
         }
 
         if (true === array_key_exists(Reason::$UNAUTHORIZED, $groups)) {
-            $this->output->write('check unauthorized packages...');
-            $this->output->writeln(format($groups[Reason::$UNAUTHORIZED]));
+            echo('check unauthorized packages...');
+            echo(format($groups[Reason::$UNAUTHORIZED]) . PHP_EOL);
             $this->writePackages($groups[Reason::$UNAUTHORIZED]);
             $ret = 1;
         }
 
         if (true === array_key_exists(Reason::$UNKNOWN, $groups)) {
-            $this->output->write('check unknown packages...');
-            $this->output->writeln(format($groups[Reason::$UNKNOWN]));
+            echo('check unknown packages...');
+            echo(format($groups[Reason::$UNKNOWN]) . PHP_EOL);
             $this->writePackages($groups[Reason::$UNKNOWN]);
             $ret = 1;
         }
@@ -262,12 +239,12 @@ final class CommandLine extends Command
     private function writePackages($packages)
     {
         foreach ($packages as $package) {
-            $this->output->writeln(sprintf(
-                '    %s (%s): %s',
-                $package['name'],
-                $package['version'],
-                count($package['licenses']) > 0 ? join(', ', $package['licenses']) : 'UNKNOWN'
-            ));
+            echo(sprintf(
+                    '    %s (%s): %s',
+                    $package['name'],
+                    $package['version'],
+                    count($package['licenses']) > 0 ? join(', ', $package['licenses']) : 'UNKNOWN'
+                ) . PHP_EOL);
         }
     }
 }

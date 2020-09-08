@@ -2,8 +2,6 @@
 
 liccheck is an PHP License Checker library thanks to `composer licenses` command output to check composer packages listed and report license issues.
 
-Based on `dhatim/python-license-check`.
-
 ## Installation
 
 Use the package manager [composer](https://getcomposer.org/doc/) to install liccheck.
@@ -15,7 +13,7 @@ composer require --dev ticdenis/liccheck
 ## Usage
 
 ```bash
-./vendor/bin/liccheck liccheck -s license_strategy.json
+./vendor/bin/liccheck -s license_strategy.json
 ```
 
 Here an example of a ``license_strategy.json`` file:
@@ -23,8 +21,8 @@ Here an example of a ``license_strategy.json`` file:
 {
     "Licenses": {
         "authorized_licenses": [
-          "MIT",
-          "Apache 2.0"
+          "BSD-3-Clause",
+          "MIT"
         ],
         "unauthorized_licenses": [
           "propietary"
@@ -45,6 +43,8 @@ Here an example of a ``license_strategy.json`` file:
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
+
+Based on `dhatim/python-license-check`.
 
 ## License
 [MIT](https://github.com/ticdenis/php-liccheck/blob/master/LICENSE)
