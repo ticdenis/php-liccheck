@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\CommandLine;
+namespace Tests;
 
-use LicCheck\CommandLine\Level;
+use LicCheck\Level;
 use PHPUnit\Framework\TestCase;
 
 final class LevelTest extends TestCase

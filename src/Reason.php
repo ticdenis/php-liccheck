@@ -1,6 +1,6 @@
 <?php
 
-namespace LicCheck\CommandLine;
+namespace LicCheck;
 
 use InvalidArgumentException;
 
@@ -35,7 +35,7 @@ final class Reason
     }
 
     /** @return string[] */
-    private static function member()
+    public static function member()
     {
         return [self::$OK, self::$UNAUTHORIZED, self::$UNKNOWN];
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\CommandLine;
+namespace Tests;
 
-use LicCheck\CommandLine\Reason;
+use LicCheck\Reason;
 use PHPUnit\Framework\TestCase;
 
 final class ReasonTest extends TestCase

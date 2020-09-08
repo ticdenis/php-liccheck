@@ -1,6 +1,6 @@
 <?php
 
-namespace LicCheck\CommandLine;
+namespace LicCheck;
 
 use InvalidArgumentException;
 
@@ -53,7 +53,7 @@ final class Level
     }
 
     /** @return string[] */
-    private static function member()
+    public static function member()
     {
         return [self::$STANDARD, self::$CAUTIOUS, self::$PARANOID];
     }

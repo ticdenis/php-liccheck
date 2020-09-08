@@ -15,7 +15,7 @@ composer require --dev ticdenis/liccheck
 ## Usage
 
 ```bash
-./vendor/bin/liccheck -s license_strategy.json
+./vendor/bin/liccheck liccheck -s license_strategy.json
 ```
 
 Here an example of a ``license_strategy.json`` file:

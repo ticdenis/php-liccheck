@@ -1,6 +1,15 @@
 #!/usr/bin/php
 <?php
 
+use Symfony\Component\Console\Application;
+use LicCheck\CommandLine;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
-require_once __DIR__ . '/../src/CommandLine.php';
+$application = new Application('liccheck', '1.1.0');
+$command     = new CommandLine();
+
+$application->add($command);
+$application->setDefaultCommand($command->getName());
+
+$application->run();
